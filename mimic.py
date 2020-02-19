@@ -46,7 +46,7 @@ columns, so the output looks better.
 import random
 import sys
 
-__author__ = "???"
+__author__ = "Noah"
 
 
 def create_mimic_dict(filename):
@@ -66,9 +66,20 @@ def create_mimic_dict(filename):
                 "care" : ["who"],
                 "who" : ["knows"]
             }
+            
     """
-    # +++your code here+++
-
+    with open(filename) as fp:
+        stringData = fp.read()
+        arrayData = stringData.split()
+        mimicDict = {"": [arrayData[0]]}
+        for i in range(0, len(arrayData) - 1):
+            location = arrayData[i]
+            if(mimicDict.get(location, -1) == -1):
+                mimicDict[location] = [arrayData[i + 1]]
+            else:
+                mimicDict[location].append(arrayData[i + 1])
+    print(mimicDict)
+    return (mimicDict)
 
 def print_mimic(mimic_dict, start_word):
     """Given a previously compiled mimic_dict and start_word, prints 200 random words:
@@ -77,8 +88,14 @@ def print_mimic(mimic_dict, start_word):
         - Randomly select a new word from the next-list
         - Repeat this process 200 times
     """
-    # +++your code here+++
-    pass
+    word = start_word
+    for i in range(0, 201):
+        print(word)
+        if(mimic_dict.get(word, -1) == -1):
+            word = ""
+        else:
+            tempList = mimic_dict[word]
+            word = random.choice(tempList)
 
 
 # Provided main(), calls mimic_dict() and mimic()
@@ -93,3 +110,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
